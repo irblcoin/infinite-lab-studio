@@ -1,0 +1,20 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+.DS_Store
+artifacts/
+*.log
+.env
+.env.*
+!.env.example
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.work/
+# Sample packs are fetched with scripts/fetch-packs.py, never committed.
+public/packs/
+ils-source.tar.gz
