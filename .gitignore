@@ -15,7 +15,9 @@ artifacts/
 __pycache__/
 *.pyc
 .work/
+ils-source.tar.gz
 # The ~197 MB of openly licensed sample packs are fetched, never committed:
 #   python3 scripts/fetch-packs.py
-public/packs/
-ils-source.tar.gz
+# Only the catalogue is tracked; the script rewrites it as packs arrive.
+public/packs/*
+!public/packs/index.json
