@@ -15,6 +15,3 @@ artifacts/
 __pycache__/
 *.pyc
 .work/
-# Sample packs are fetched with scripts/fetch-packs.py, never committed.
-public/packs/
-ils-source.tar.gz

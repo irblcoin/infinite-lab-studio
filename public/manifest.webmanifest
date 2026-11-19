@@ -1,0 +1,21 @@
+{
+  "name": "ILS – Infinite Lab Studio by Building Billions LLC",
+  "short_name": "ILS Studio",
+  "description": "ILS – Infinite Lab Studio, a product of Building Billions LLC. A browser DAW with real sampled instruments, a sequencer, mixer, warping and voice control.",
+  "author": "Building Billions LLC",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0c10",
+  "theme_color": "#0a0c10",
+  "categories": ["music", "productivity"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

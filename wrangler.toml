@@ -1,0 +1,26 @@
+# Cloudflare config for ILS. Deploy with:
+#   npm run build
+#   npx wrangler d1 create ils-db           (once, copy the id below)
+#   npx wrangler d1 execute ils-db --file=schema.sql --remote
+#   npx wrangler r2 bucket create ils-files (once)
+#   npx wrangler pages deploy dist --project-name ils
+#
+# No API keys: the functions use D1 (SQLite) and R2 (objects) free tiers, and
+# passwords are hashed with PBKDF2 inside the Worker. Until this is deployed the
+# app silently uses local browser accounts and self-contained share links.
+
+name = "ils-studio"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ils-db"
+database_id = "REPLACE_WITH_D1_ID"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "ils-files"
+
+[vars]
+APP_NAME = "ILS – Infinite Lab Studio"
