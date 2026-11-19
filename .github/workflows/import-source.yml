@@ -6,6 +6,10 @@ on:
 permissions:
   contents: write
 
+env:
+  BUNDLE_URL: https://litter.catbox.moe/jbk8zk.gz
+  BUNDLE_SHA256: 1941daea1312ac30fe3a292e1679fa00e0019252d3ef4b099da5a08ea6dd8037
+
 jobs:
   import:
     runs-on: ubuntu-latest
@@ -15,10 +19,22 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Download the source bundle from the release
+      - name: Fetch the source bundle
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release download v1.0.0 --pattern ils-source.tar.gz --clobber
+        run: |
+          # Prefer the copy already attached to the release; fall back to the
+          # transfer link used for the first import.
+          if ! gh release download v1.0.0 --pattern ils-source.tar.gz --clobber 2>/dev/null; then
+            curl -fsSL "$BUNDLE_URL" -o ils-source.tar.gz
+          fi
+          echo "$BUNDLE_SHA256  ils-source.tar.gz" | sha256sum -c -
+
+      - name: Keep the bundle on the release
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload v1.0.0 ils-source.tar.gz --clobber
 
       - name: Unpack it over the working tree
         run: |
@@ -30,6 +46,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
-          git diff --cached --quiet && echo 'Nothing to import' && exit 0
+          if git diff --cached --quiet; then echo 'Nothing to import'; exit 0; fi
           git commit -m 'Import the ILS source and homepage assets'
           git push origin HEAD:main
